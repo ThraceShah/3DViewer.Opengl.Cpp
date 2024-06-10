@@ -1,0 +1,32 @@
+---
+Language:        Cpp
+# Based on the Microsoft style
+BasedOnStyle:  Microsoft
+
+# # Indentation
+# IndentWidth:     4
+# TabWidth:        4
+# UseTab:          Never
+# BreakBeforeBraces: Allman
+# AllowShortIfStatementsOnASingleLine: false
+# IndentCaseLabels: false
+
+# # Column limit
+# ColumnLimit:     0
+
+# # Break constructor initializers before comma
+# BreakConstructorInitializersBeforeComma: true
+
+# # Spaces in parentheses
+# SpacesInParentheses: false
+# SpacesInSquareBrackets: false
+# SpacesInAngles:  false
+
+# # Namespace indentation
+# NamespaceIndentation: None
+
+# # Pointer alignment
+# PointerAlignment: Right
+
+# # Sort includes
+# SortIncludes:    true

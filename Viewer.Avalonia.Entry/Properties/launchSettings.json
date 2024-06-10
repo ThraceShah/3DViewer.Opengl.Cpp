@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Viewer.Avalonia.Entry": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}
