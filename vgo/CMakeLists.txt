@@ -17,8 +17,16 @@ target_link_libraries(${PROJECT_NAME} PRIVATE glad::glad)
 find_package(glm CONFIG REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE glm::glm)
 
-
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
                    COMMAND ${CMAKE_COMMAND} -E copy_directory
                            ${CMAKE_CURRENT_SOURCE_DIR}/glsl/
-                           $<TARGET_FILE_DIR:${PROJECT_NAME}>/glsl)
+                           ${CMAKE_BINARY_DIR}/Viewer.Avalonia.Entry/glsl)
+
+file(GLOB VGO_LIBS "${CMAKE_CURRENT_BINARY_DIR}/*.dll")
+file(GLOB VGO_PDBS "${CMAKE_CURRENT_BINARY_DIR}/*.pdb")
+
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+                   COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                           ${VGO_LIBS}
+                           ${VGO_PDBS}
+                           ${CMAKE_BINARY_DIR}/Viewer.Avalonia.Entry)

@@ -10,11 +10,11 @@
 		<PublishAot>true</PublishAot>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-		<OutDir>../out/build/x64-debug/vgo</OutDir>
+		<OutDir>../out/build/x64-debug/Viewer.Avalonia.Entry</OutDir>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-		<OutDir>../out/build/x64-release/vgo</OutDir>
+		<OutDir>../out/build/x64-release/Viewer.Avalonia.Entry</OutDir>
 	</PropertyGroup>
 
 	<ItemGroup>

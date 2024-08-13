@@ -15,5 +15,15 @@ endif()
 
 project ("vgo")
 
+# Ensure consistent runtime library usage
+if(MSVC)
+  # Use /MD for multi-threaded DLL runtime
+  set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MD")
+  set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} /MD")
+  set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MDd")
+  set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} /MDd")
+endif()
+
 # Include sub-projects.
 add_subdirectory("vgo")
+add_subdirectory("Viewer.Avalonia.Entry")
