@@ -1,8 +1,12 @@
 #pragma once
 
 #include "KeyCode.h"
-
+#ifdef VGO_EXPORT
 #define DLL_EXPORT extern "C" __declspec(dllexport)
+#else
+#define DLL_EXPORT extern "C" __declspec(dllimport)
+#endif // VGO_EXPORT
+
 
 typedef struct UnSafeArray
 {

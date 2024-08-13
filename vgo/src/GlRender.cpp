@@ -486,6 +486,7 @@ static vgo::GlRender *glRender = nullptr;
 
 int32_t init_gl_render(void *getProcAddress,char *rootDir)
 {
+    std::cout << "rootDir: " << rootDir << "\n";
     vgo::init_root_dir(rootDir);
     if (!gladLoadGLLoader((GLADloadproc)getProcAddress))
     {
