@@ -228,10 +228,11 @@ struct VSConstantBuffer
 
     VSConstantBuffer()
         : world(Mat4Identity), view(glm::lookAt(glm::vec3(0, 0, -16.f), Vec3Zero, Vec3Unity)),
-          projection(glm::perspectiveFov(1.570796327f, 800.0f, 600.0f, 0.1f, 100.0f)),
+          projection(glm::ortho(-800.f/600.f,800.f/600.f, 1.f, 1.f, 0.1f, 100.0f)),
           translation(Mat4Identity),
           origin(Mat4Identity)
     {
+        
     }
 
 };
@@ -271,13 +272,13 @@ class GlRender
     void UpdateGeometry(const AsmGeometry &asmGeometry)
     {
         keyCode = KeyCode::None;
-        zoom = ZOOM;
+        orthoScale = 1.0f;
         mouseXOffset = 0;
         mouseYOffset = 0;
 
         vsConstantBuffer = VSConstantBuffer();
         UpdateProjMatrix();
-        asmGeometry.CreateAsmWorldRH(16, 12, world);
+        asmGeometry.CreateAsmWorldRH(1, 1, world);
         partBuffers = std::make_unique<PartBuffers>(asmGeometry);
         geometry = asmGeometry;
     }
@@ -426,12 +427,10 @@ class GlRender
     }
 
   private:
-    const float ZOOM = 60.f;
-    KeyCode keyCode = KeyCode::None;
-    float zoom = ZOOM;
-    float mouseXOffset = 0;
-    float mouseYOffset = 0;
-
+    KeyCode keyCode{KeyCode::None};
+    float mouseXOffset{0};
+    float mouseYOffset{0};
+    float orthoScale{1.0f};
     glm::mat4 world;
 
     VSConstantBuffer vsConstantBuffer;
@@ -459,19 +458,16 @@ class GlRender
 
     void UpdateProjMatrix()
     {
-        auto radians = glm::radians(zoom);
-        auto aspectRatio = glm::max(width, 1u) / glm::max(height, 1u);
-        vsConstantBuffer.projection = glm::perspective(radians, (float)aspectRatio, 0.1f, 100.0f);
+        auto aspectRatio = static_cast<float>(width) / static_cast<float>(height);
+        vsConstantBuffer.projection = glm::ortho(-orthoScale * aspectRatio, 
+        orthoScale * aspectRatio, -orthoScale, orthoScale, 0.1f, 100.0f);
     }
 
     void ProcessMouseScroll(float yoffset)
     {
-        // opengl这里的取值范围和dx是不一样的,opengl不能小于0,但是dx可以,这和二者的投影算法不同有关
-        zoom -= yoffset;
-        if (zoom <= -0.0f)
-            zoom = 0.001f;
-        if (zoom >= 180.0f)
-            zoom = 179.990f;
+        orthoScale-=yoffset*0.1f;
+        if(orthoScale<=0.1f)
+            orthoScale=0.1f;
     }
     void ProcessMouseMovement(float xoffset, float yoffset, bool constrainPitch = true)
     {

@@ -10,3 +10,4 @@ releaseout
 .cache
 build
 CMakeSettings.json
+compile_commands.json
